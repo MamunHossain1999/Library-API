@@ -1,6 +1,7 @@
 import mongoose, { Schema, Model } from 'mongoose';
-import { Book } from '../book/book.model';
+
 import { IBorrow, IBorrowStatics } from './borrow.interface';
+import { Book } from '../book/book.model';
 
 const borrowSchema = new Schema<IBorrow>(
   {

@@ -1,4 +1,3 @@
-import { Book } from './../book/book.model';
 import { Request, Response } from 'express';
 import { Borrow } from './borrow.model';
 

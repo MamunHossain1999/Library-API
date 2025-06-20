@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { Book } from "./book.model";
 
 export const BookController = {
   // Create a new book
-  createBook: async (req: Request, res: Response) => {
+  createBook: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const newBook = await Book.create(req.body);
       res.status(201).json({
@@ -12,14 +12,12 @@ export const BookController = {
         data: newBook,
       });
     } catch (error) {
-      res
-        .status(400)
-        .json({ success: false, message: "Error creating book", error });
+      next(error);
     }
   },
 
   // Get all books with optional filtering and sorting
-  getAllBooks: async (req: Request, res: Response) => {
+  getAllBooks: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const {
         filter,
@@ -27,6 +25,7 @@ export const BookController = {
         sort = "desc",
         limit = "10",
       } = req.query;
+
       const query: any = {};
       if (filter) query.genre = filter;
 
@@ -40,21 +39,18 @@ export const BookController = {
         data: books,
       });
     } catch (error) {
-      res
-        .status(500)
-        .json({ success: false, message: "Error retrieving books", error });
+      next(error);
     }
   },
 
   // Get a book by ID
-  getBookById: async (req: Request, res: Response) => {
+  getBookById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const book = await Book.findById(req.params.bookId);
+
+      //   error handling for book not found
       if (!book) {
-         res
-          .status(404)
-          .json({ success: false, message: "Book not found" });
-          return
+        throw new Error("Book not found");
       }
 
       res.json({
@@ -63,24 +59,19 @@ export const BookController = {
         data: book,
       });
     } catch (error) {
-      res
-        .status(500)
-        .json({ success: false, message: "Error retrieving book", error });
+      next(error);
     }
   },
 
   // Update a book by ID
-  updateBook: async (req: Request, res: Response) => {
+  updateBook: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const book = await Book.findByIdAndUpdate(req.params.bookId, req.body, {
         new: true,
       });
-      if (!book)
-      {
-         res
-          .status(404)
-          .json({ success: false, message: "Book not found" });
-         return
+      //   error handling for book not found
+      if (!book) {
+        throw new Error("Book not found");
       }
 
       res.json({
@@ -89,24 +80,25 @@ export const BookController = {
         data: book,
       });
     } catch (error) {
-      res
-        .status(400)
-        .json({ success: false, message: "Error updating book", error });
+      next(error);
     }
   },
+
   // Delete a book by ID
-  deleteBook: async (req: Request, res: Response) => {
+  deleteBook: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await Book.findByIdAndDelete(req.params.bookId);
+      const deleted = await Book.findByIdAndDelete(req.params.bookId);
+      if (!deleted) {
+        throw new Error("Book not found");
+      }
+
       res.json({
         success: true,
         message: "Book deleted successfully",
         data: null,
       });
     } catch (error) {
-      res
-        .status(500)
-        .json({ success: false, message: "Error deleting book", error });
+      next(error);
     }
   },
 };
