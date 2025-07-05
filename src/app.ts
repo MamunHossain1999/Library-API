@@ -8,7 +8,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -18,6 +18,7 @@ app.use(express.json());
 // Routes
 app.use("/api/books", BookRoutes);
 app.use("/api/borrow", BorrowRoutes);
+app.use("/api/borrow/summary", BorrowRoutes);
 
 
 app.use(globalErrorHandler);
