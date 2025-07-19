@@ -8,7 +8,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["https://libray-rho.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -19,7 +19,6 @@ app.use(express.json());
 app.use("/api/books", BookRoutes);
 app.use("/api/borrow", BorrowRoutes);
 app.use("/api/borrow/summary", BorrowRoutes);
-
 
 app.use(globalErrorHandler);
 export { app };

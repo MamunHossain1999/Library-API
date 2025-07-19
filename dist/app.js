@@ -12,7 +12,7 @@ const globalErrorHandler_1 = require("./middlewares/globalErrorHandler");
 const app = (0, express_1.default)();
 exports.app = app;
 app.use((0, cors_1.default)({
-    origin: "*",
+    origin: "https://libray-rho.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 }));
@@ -20,4 +20,5 @@ app.use(express_1.default.json());
 // Routes
 app.use("/api/books", book_route_1.BookRoutes);
 app.use("/api/borrow", borrow_route_1.BorrowRoutes);
+app.use("/api/borrow/summary", borrow_route_1.BorrowRoutes);
 app.use(globalErrorHandler_1.globalErrorHandler);
