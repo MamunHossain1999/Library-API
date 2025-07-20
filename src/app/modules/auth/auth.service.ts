@@ -1,19 +1,20 @@
+import bcrypt from 'bcryptjs';
+import { User } from '../user/user.model';
+import { signToken } from '../../../utils/jwt';
 
-import { IRegisterInput, ILoginInput } from './auth.interface';
-import bcrypt from "bcryptjs";
-export const registerService = async ({ email, password}: IRegisterInput)=>{
-    const existingUser = await User.findOne({email});
-    if(existingUser) throw new Error('User already exists')
+export const registerUser = async (payload: any) => {
+  const hashedPassword = await bcrypt.hash(payload.password, 10);
+  const user = await User.create({ ...payload, password: hashedPassword });
+  return { user };
+};
 
-    const hashed = await bcrypt.hash(password, 10);
-    const user = new User({email, password:hashed});
-    return await user.save();    
-}
+export const loginUser = async (payload: any) => {
+  const user = await User.findOne({ email: payload.email });
+  if (!user) throw new Error('User not found');
 
+  const match = await bcrypt.compare(payload.password, user.password);
+  if (!match) throw new Error('Wrong password');
 
-export const loginService = async ({email, password}: ILoginInput)=>{
-    const user = await User.findOne({email});
-    if(!user || !(await bcrypt.compare(password, user.password))) {
-        throw new Error("Invalid credentials");
-    }
-}
+  const token = signToken({ id: user._id, email: user.email });
+  return { user, token };
+};

@@ -39,3 +39,6 @@ Develop a robust backend API for managing books and borrowing operations in a li
 
 ---
 
+agula use kora hoyese atate
+npm install express mongoose bcryptjs jsonwebtoken cookie-parser cors dotenv zod
+npm install --save-dev typescript ts-node-dev @types/express @types/node @types/cookie-parser @types/jsonwebtoken
