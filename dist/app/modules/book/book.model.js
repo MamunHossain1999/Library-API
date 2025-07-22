@@ -34,6 +34,7 @@ const bookSchema = new mongoose_1.Schema({
         min: [0, "Copies must be a positive number"],
     },
     available: { type: Boolean, default: true },
+    image: { type: String },
 }, { timestamps: true });
 // Static method to update availability
 bookSchema.statics.updateAvailability = function (bookId) {

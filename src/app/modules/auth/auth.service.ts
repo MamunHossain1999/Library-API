@@ -16,6 +16,12 @@ export const loginUser = async (payload: ILoginInput) => {
   const match = await bcrypt.compare(payload.password, user.password);
   if (!match) throw new Error('Wrong password');
 
-  const token = signToken({ id: user._id, email: user.email });
+  const token = signToken({ 
+    id: user._id, 
+    email: user.email,
+    name: user.name,  
+  });
+
   return { user, token };
 };
+

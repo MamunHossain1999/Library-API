@@ -36,6 +36,7 @@ export interface IGoogleUser {
 export interface AuthenticatedRequest extends Request {
   user?: {
     id: string;
+    name:string;
     email: string;
   };
 }

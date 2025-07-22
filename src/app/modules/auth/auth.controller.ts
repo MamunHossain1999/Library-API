@@ -1,8 +1,6 @@
 // src/modules/auth/auth.controller.ts
 import { Request, RequestHandler, Response } from "express";
 import { loginUser, registerUser } from "./auth.service";
-import { AuthenticatedRequest } from "../../../interfaces";
-
 
 
 export const register = async (req: Request, res: Response) => {
@@ -38,7 +36,19 @@ export const logout = (req: Request, res: Response) => {
 };
 
 
-export const getMe:RequestHandler = (req, res) => {
-  const user = (req as AuthenticatedRequest).user;
-  res.json({ user });
+export const getMe: RequestHandler = (req, res) => {
+  const user = (req as any).user; 
+
+  if (!user) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  res.json({
+    user: {
+      id: user.id,
+      name: user.name || "",
+      email: user.email ,
+    },
+  });
 };

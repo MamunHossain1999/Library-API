@@ -29,7 +29,7 @@ exports.BookController = {
     // Get all books with optional filtering and sorting
     getAllBooks: (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const { filter, sortBy = "createdAt", sort = "desc", limit = "10", } = req.query;
+            const { filter, sortBy = "createdAt", sort = "desc", limit = "30", } = req.query;
             const query = {};
             if (filter)
                 query.genre = filter;

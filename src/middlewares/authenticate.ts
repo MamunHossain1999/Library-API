@@ -13,10 +13,16 @@ export const authenticate: RequestHandler = (
     res.status(401).json({ message: "Unauthorized: No token provided" });
     return;
   }
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as DecodedUser;
-    (req as AuthenticatedRequest).user = decoded;
+
+    // ✅ Make sure name is included
+    (req as AuthenticatedRequest).user = {
+      id: decoded.id,
+      name: decoded.name,
+      email: decoded.email,
+    };
+
     next();
   } catch {
     res.status(403).json({ message: "Invalid token" });
