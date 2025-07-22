@@ -1,4 +1,10 @@
-export type Genre = 'FICTION' | 'NON_FICTION' | 'SCIENCE' | 'HISTORY' | 'BIOGRAPHY' | 'FANTASY';
+export type Genre =
+  | "FICTION"
+  | "NON_FICTION"
+  | "SCIENCE"
+  | "HISTORY"
+  | "BIOGRAPHY"
+  | "FANTASY";
 
 export interface IBook {
   title: string;
@@ -10,4 +16,5 @@ export interface IBook {
   available?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  image: String;
 }

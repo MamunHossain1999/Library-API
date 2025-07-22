@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";            
 import { BookRoutes } from "./app/modules/book/book.route";
 import { BorrowRoutes } from "./app/modules/borrow/borrow.route";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
@@ -7,7 +8,10 @@ import cookieParser from "cookie-parser";
 import { AuthRoutes } from "./app/modules/auth/auth.route";
 
 const app = express();
-app.use(cookieParser()); 
+
+app.use(morgan("dev"));             
+
+app.use(cookieParser());
 
 app.use(
   cors({
@@ -16,15 +20,17 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
-// ✅ Authentication Routes
+
+// Authentication Routes
 app.use("/api/auth", AuthRoutes);
 
-
-//Aplication Routes
+// Application Routes
 app.use("/api/books", BookRoutes);
 app.use("/api/borrow", BorrowRoutes);
 app.use("/api/borrow/summary", BorrowRoutes);
 
 app.use(globalErrorHandler);
+
 export { app };

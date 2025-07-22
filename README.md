@@ -42,3 +42,15 @@ Develop a robust backend API for managing books and borrowing operations in a li
 agula use kora hoyese atate
 npm install express mongoose bcryptjs jsonwebtoken cookie-parser cors dotenv zod
 npm install --save-dev typescript ts-node-dev @types/express @types/node @types/cookie-parser @types/jsonwebtoken
+
+
+1. প্যাকেজ ইনস্টল করো google login er jnno
+npm install passport passport-google-oauth20 express-session
+npm install --save-dev @types/passport @types/passport-google-oauth20
+npm install google-auth-library
+npm install --save-dev @types/express
+
+
+sob gula ak sathe
+npm install google-auth-library express cookie-parser dotenv jsonwebtoken bcryptjs mongoose
+npm install --save-dev @types/express @types/cookie-parser @types/jsonwebtoken @types/bcryptjs

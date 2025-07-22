@@ -23,7 +23,7 @@ export const BookController = {
         filter,
         sortBy = "createdAt",
         sort = "desc",
-        limit = "10",
+        limit = "30",
       } = req.query;
 
       const query: any = {};
