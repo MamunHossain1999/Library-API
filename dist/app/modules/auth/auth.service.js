@@ -29,7 +29,11 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const match = yield bcryptjs_1.default.compare(payload.password, user.password);
     if (!match)
         throw new Error('Wrong password');
-    const token = (0, jwt_1.signToken)({ id: user._id, email: user.email });
+    const token = (0, jwt_1.signToken)({
+        id: user._id,
+        email: user.email,
+        name: user.name,
+    });
     return { user, token };
 });
 exports.loginUser = loginUser;

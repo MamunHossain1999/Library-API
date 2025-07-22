@@ -46,6 +46,16 @@ const logout = (req, res) => {
 exports.logout = logout;
 const getMe = (req, res) => {
     const user = req.user;
-    res.json({ user });
+    if (!user) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+    res.json({
+        user: {
+            id: user.id,
+            name: user.name || "",
+            email: user.email,
+        },
+    });
 };
 exports.getMe = getMe;

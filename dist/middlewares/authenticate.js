@@ -14,7 +14,12 @@ const authenticate = (req, res, next) => {
     }
     try {
         const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+        // ✅ Make sure name is included
+        req.user = {
+            id: decoded.id,
+            name: decoded.name,
+            email: decoded.email,
+        };
         next();
     }
     catch (_b) {
